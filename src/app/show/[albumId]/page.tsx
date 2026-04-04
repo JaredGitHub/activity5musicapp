@@ -4,12 +4,14 @@ import { useState, useEffect } from 'react';
 import OneAlbum from '../../../OneAlbum';
 import { Album } from '../../../types';
 
-export default function ShowPage({ params }: { params: { albumId: string } }) {
+export default function ShowPage({ params }: { params: Promise<{ albumId: string }> }) {
   const [album, setAlbum] = useState<Album | null>(null);
 
   useEffect(() => {
-    fetch(`/api/albums/${params.albumId}`).then((res) => res.json()).then(setAlbum);
-  }, [params.albumId]);
+    params.then(({ albumId }) =>
+      fetch(`/api/albums/${albumId}`).then((res) => res.json()).then(setAlbum)
+    );
+  }, [params]);
 
   if (!album) return <div className="container"><p>Loading...</p></div>;
 

@@ -13,16 +13,18 @@ function writeAlbums(albums: Album[]): void {
   fs.writeFileSync(dataFilePath, JSON.stringify(albums, null, 2));
 }
 
-export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const albums = readAlbums();
-  const album = albums.find((a) => String(a.id) === params.id);
+  const album = albums.find((a) => String(a.id) === id);
   if (!album) return NextResponse.json({ message: 'Album not found' }, { status: 404 });
   return NextResponse.json(album);
 }
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const albums = readAlbums();
-  const index = albums.findIndex((a) => String(a.id) === params.id);
+  const index = albums.findIndex((a) => String(a.id) === id);
   if (index === -1) return NextResponse.json({ message: 'Album not found' }, { status: 404 });
   const body = await req.json();
   albums[index] = { ...albums[index], ...body, id: albums[index].id };
@@ -30,9 +32,10 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
   return NextResponse.json(albums[index]);
 }
 
-export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const albums = readAlbums();
-  const index = albums.findIndex((a) => String(a.id) === params.id);
+  const index = albums.findIndex((a) => String(a.id) === id);
   if (index === -1) return NextResponse.json({ message: 'Album not found' }, { status: 404 });
   const [deleted] = albums.splice(index, 1);
   writeAlbums(albums);

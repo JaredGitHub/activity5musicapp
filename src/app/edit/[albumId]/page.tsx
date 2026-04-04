@@ -5,13 +5,15 @@ import { useRouter } from 'next/navigation';
 import EditAlbum from '../../../EditAlbum';
 import { Album } from '../../../types';
 
-export default function EditPage({ params }: { params: { albumId: string } }) {
+export default function EditPage({ params }: { params: Promise<{ albumId: string }> }) {
   const router = useRouter();
   const [album, setAlbum] = useState<Album | null>(null);
 
   useEffect(() => {
-    fetch(`/api/albums/${params.albumId}`).then((res) => res.json()).then(setAlbum);
-  }, [params.albumId]);
+    params.then(({ albumId }) =>
+      fetch(`/api/albums/${albumId}`).then((res) => res.json()).then(setAlbum)
+    );
+  }, [params]);
 
   const onEditAlbum = () => {
     router.push('/');
