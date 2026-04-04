@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import EditAlbum from '../../../EditAlbum';
-import dataSource from '../../../dataSource';
+import { getAlbum } from '../../../lib/actions';
 import { Album } from '../../../types';
 
 export default function EditPage({ params }: { params: { albumId: string } }) {
@@ -11,7 +11,7 @@ export default function EditPage({ params }: { params: { albumId: string } }) {
   const [album, setAlbum] = useState<Album | null>(null);
 
   useEffect(() => {
-    dataSource.get<Album>('/albums/' + params.albumId).then((res) => setAlbum(res.data));
+    getAlbum(params.albumId).then(setAlbum);
   }, [params.albumId]);
 
   const onEditAlbum = () => {

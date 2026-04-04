@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import dataSource from './dataSource';
+import { updateAlbum } from './lib/actions';
 import { Album } from './types';
 
 interface EditAlbumProps {
@@ -32,8 +32,7 @@ const EditAlbum = (props: EditAlbumProps) => {
   };
 
   const saveAlbum = async (album: object) => {
-    const response = await dataSource.put('/albums/' + props.album.id, album);
-    console.log(response.data);
+    await updateAlbum(String(props.album.id), album as any);
     props.onEditAlbum();
   };
 

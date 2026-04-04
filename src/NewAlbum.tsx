@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import dataSource from './dataSource';
+import { createAlbum } from './lib/actions';
 
 interface NewAlbumProps {
   onNewAlbum: () => void;
@@ -30,8 +30,7 @@ const NewAlbum = (props: NewAlbumProps) => {
   };
 
   const saveAlbum = async (album: object) => {
-    const response = await dataSource.post('/albums', album);
-    console.log(response.data);
+    await createAlbum(album as any);
     props.onNewAlbum();
   };
 

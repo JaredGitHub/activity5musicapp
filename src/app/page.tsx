@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import SearchAlbum from '../SearchAlbum';
-import dataSource from '../dataSource';
+import { getAlbums } from '../lib/actions';
 import { Album } from '../types';
 
 export default function Home() {
@@ -12,13 +12,8 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    loadAlbums();
+    getAlbums().then(setAlbumList);
   }, []);
-
-  const loadAlbums = async () => {
-    const response = await dataSource.get<Album[]>('/albums');
-    setAlbumList(response.data);
-  };
 
   const updateSearchResults = (phrase: string) => {
     setSearchPhrase(phrase);
