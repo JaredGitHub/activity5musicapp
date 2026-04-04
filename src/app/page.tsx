@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import SearchAlbum from '../SearchAlbum';
-import { getAlbums } from '../lib/actions';
 import { Album } from '../types';
 
 export default function Home() {
@@ -12,7 +11,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    getAlbums().then(setAlbumList);
+    fetch('/api/albums').then((res) => res.json()).then(setAlbumList);
   }, []);
 
   const updateSearchResults = (phrase: string) => {

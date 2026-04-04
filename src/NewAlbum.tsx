@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createAlbum } from './lib/actions';
 
 interface NewAlbumProps {
   onNewAlbum: () => void;
@@ -30,7 +29,11 @@ const NewAlbum = (props: NewAlbumProps) => {
   };
 
   const saveAlbum = async (album: object) => {
-    await createAlbum(album as any);
+    await fetch('/api/albums', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(album),
+    });
     props.onNewAlbum();
   };
 

@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import EditAlbum from '../../../EditAlbum';
-import { getAlbum } from '../../../lib/actions';
 import { Album } from '../../../types';
 
 export default function EditPage({ params }: { params: { albumId: string } }) {
@@ -11,7 +10,7 @@ export default function EditPage({ params }: { params: { albumId: string } }) {
   const [album, setAlbum] = useState<Album | null>(null);
 
   useEffect(() => {
-    getAlbum(params.albumId).then(setAlbum);
+    fetch(`/api/albums/${params.albumId}`).then((res) => res.json()).then(setAlbum);
   }, [params.albumId]);
 
   const onEditAlbum = () => {

@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { updateAlbum } from './lib/actions';
 import { Album } from './types';
 
 interface EditAlbumProps {
@@ -32,7 +31,11 @@ const EditAlbum = (props: EditAlbumProps) => {
   };
 
   const saveAlbum = async (album: object) => {
-    await updateAlbum(String(props.album.id), album as any);
+    await fetch(`/api/albums/${props.album.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(album),
+    });
     props.onEditAlbum();
   };
 
