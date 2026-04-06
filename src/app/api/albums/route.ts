@@ -9,9 +9,6 @@ function readAlbums(): Album[] {
   return JSON.parse(fs.readFileSync(dataFilePath, 'utf-8'));
 }
 
-function writeAlbums(albums: Album[]): void {
-  fs.writeFileSync(dataFilePath, JSON.stringify(albums, null, 2));
-}
 
 export async function GET() {
   return NextResponse.json(readAlbums());
@@ -24,7 +21,5 @@ export async function POST(req: NextRequest) {
     ...body,
     id: albums.length > 0 ? Math.max(...albums.map((a) => a.id)) + 1 : 0,
   };
-  albums.push(newAlbum);
-  writeAlbums(albums);
   return NextResponse.json(newAlbum, { status: 201 });
 }
