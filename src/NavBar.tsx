@@ -23,6 +23,9 @@ const NavBar = () => {
           <span className='nav-item nav-link'>
             <Link href='/new'>New</Link>
           </span>
+          <span className='nav-item nav-link'>
+            <Link href='/about'>About</Link>
+          </span>
         </div>
       </div>
     </nav>
