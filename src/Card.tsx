@@ -1,3 +1,5 @@
+'use client';
+
 interface CardProps {
   albumId: number;
   title: string;

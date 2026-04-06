@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { Album } from './types';
 
 interface EditAlbumProps {
-  onEditAlbum: () => void;
   album: Album;
 }
 
@@ -36,7 +35,7 @@ const EditAlbum = (props: EditAlbumProps) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(album),
     });
-    props.onEditAlbum();
+    router.push('/');
   };
 
   return (

@@ -3,9 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-interface NewAlbumProps {
-  onNewAlbum: () => void;
-}
+interface NewAlbumProps {}
 
 const NewAlbum = (props: NewAlbumProps) => {
   const [albumTitle, setAlbumTitle] = useState('');
@@ -34,7 +32,7 @@ const NewAlbum = (props: NewAlbumProps) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(album),
     });
-    props.onNewAlbum();
+    router.push('/');
   };
 
   return (

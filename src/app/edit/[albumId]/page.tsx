@@ -1,61 +1,10 @@
-'use client';
+import { getAlbum } from '../../../lib/data';
+import EditAlbum from '../../../EditAlbum';
+import { notFound } from 'next/navigation';
 
-import { get } from '@/lib/apiClient';
-import { Album, Track } from '@/lib/types';
-import { useParams, useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
-
-export default function EditAlbumPage() {
-  const router = useRouter();
-  const params = useParams();
-  const albumId = params?.albumId;
-
-  const defaultAlbum: Album = {
-    id: 0,
-    title: '',
-    artist: '',
-    description: '',
-    year: 0,
-    image: '',
-    tracks: [] as Track[],
-  };
-
-  const [album, setAlbum] = useState(defaultAlbum);
-
-  useEffect(() => {
-    if (!albumId) return;
-    (async () => {
-      const res = await get<Album>(`/albums/${albumId}`);
-      setAlbum(res);
-    })();
-  }, [albumId]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const method = albumId ? 'PUT' : 'POST';
-    const url = albumId ? `/api/albums/${albumId}` : `/api/albums`;
-    await fetch(url, {
-      method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(album),
-    });
-    router.push('/');
-  };
-
-  const onChange = (key: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    setAlbum((prev) => ({ ...prev, [key]: e.target.value }));
-
-  return (
-    <main style={{ padding: '1rem' }}>
-      <h1>{albumId ? 'Edit Album' : 'Create Album'}</h1>
-      <form onSubmit={handleSubmit}>
-        <input placeholder="Title" value={album.title} onChange={onChange('title')} />
-        <input placeholder="Artist" value={album.artist} onChange={onChange('artist')} />
-        <input placeholder="Year" value={album.year} onChange={onChange('year')} />
-        <textarea placeholder="Description" value={album.description} onChange={onChange('description')} />
-        <input placeholder="Image URL" value={album.image} onChange={onChange('image')} />
-        <button type="submit">{albumId ? 'Update' : 'Save'}</button>
-      </form>
-    </main>
-  );
+export default async function EditPage({ params }: { params: Promise<{ albumId: string }> }) {
+  const { albumId } = await params;
+  const album = getAlbum(albumId);
+  if (!album) notFound();
+  return <EditAlbum album={album} />;
 }

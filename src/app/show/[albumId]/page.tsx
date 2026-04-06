@@ -1,19 +1,10 @@
-'use client';
-
-import { useState, useEffect } from 'react';
+import { getAlbum } from '../../../lib/data';
 import OneAlbum from '../../../OneAlbum';
-import { Album } from '../../../types';
+import { notFound } from 'next/navigation';
 
-export default function ShowPage({ params }: { params: Promise<{ albumId: string }> }) {
-  const [album, setAlbum] = useState<Album | null>(null);
-
-  useEffect(() => {
-    params.then(({ albumId }) =>
-      fetch(`/api/albums/${albumId}`).then((res) => res.json()).then(setAlbum)
-    );
-  }, [params]);
-
-  if (!album) return <div className="container"><p>Loading...</p></div>;
-
+export default async function ShowPage({ params }: { params: Promise<{ albumId: string }> }) {
+  const { albumId } = await params;
+  const album = getAlbum(albumId);
+  if (!album) notFound();
   return <OneAlbum album={album} />;
 }
