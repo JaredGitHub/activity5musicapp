@@ -1,25 +1,61 @@
 'use client';
 
+import { get } from '@/lib/apiClient';
+import { Album, Track } from '@/lib/types';
+import { useParams, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import EditAlbum from '../../../EditAlbum';
-import { Album } from '../../../types';
 
-export default function EditPage({ params }: { params: Promise<{ albumId: string }> }) {
+export default function EditAlbumPage() {
   const router = useRouter();
-  const [album, setAlbum] = useState<Album | null>(null);
+  const params = useParams();
+  const albumId = params?.albumId;
+
+  const defaultAlbum: Album = {
+    id: 0,
+    title: '',
+    artist: '',
+    description: '',
+    year: 0,
+    image: '',
+    tracks: [] as Track[],
+  };
+
+  const [album, setAlbum] = useState(defaultAlbum);
 
   useEffect(() => {
-    params.then(({ albumId }) =>
-      fetch(`/api/albums/${albumId}`).then((res) => res.json()).then(setAlbum)
-    );
-  }, [params]);
+    if (!albumId) return;
+    (async () => {
+      const res = await get<Album>(`/albums/${albumId}`);
+      setAlbum(res);
+    })();
+  }, [albumId]);
 
-  const onEditAlbum = () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const method = albumId ? 'PUT' : 'POST';
+    const url = albumId ? `/api/albums/${albumId}` : `/api/albums`;
+    await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(album),
+    });
     router.push('/');
   };
 
-  if (!album) return <div className="container"><p>Loading...</p></div>;
+  const onChange = (key: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setAlbum((prev) => ({ ...prev, [key]: e.target.value }));
 
-  return <EditAlbum onEditAlbum={onEditAlbum} album={album} />;
+  return (
+    <main style={{ padding: '1rem' }}>
+      <h1>{albumId ? 'Edit Album' : 'Create Album'}</h1>
+      <form onSubmit={handleSubmit}>
+        <input placeholder="Title" value={album.title} onChange={onChange('title')} />
+        <input placeholder="Artist" value={album.artist} onChange={onChange('artist')} />
+        <input placeholder="Year" value={album.year} onChange={onChange('year')} />
+        <textarea placeholder="Description" value={album.description} onChange={onChange('description')} />
+        <input placeholder="Image URL" value={album.image} onChange={onChange('image')} />
+        <button type="submit">{albumId ? 'Update' : 'Save'}</button>
+      </form>
+    </main>
+  );
 }

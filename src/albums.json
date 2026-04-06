@@ -49,5 +49,23 @@
     "image": "wut",
     "tracks": [],
     "id": 5
+  },
+  {
+    "title": "123",
+    "artist": "12",
+    "description": "123",
+    "year": "123",
+    "image": "123",
+    "tracks": [],
+    "id": 6
+  },
+  {
+    "title": "asdf",
+    "artist": "asdf",
+    "description": "ham and cheese",
+    "year": "asdf1",
+    "image": "asdf",
+    "tracks": [],
+    "id": 7
   }
 ]
