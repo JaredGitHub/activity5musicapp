@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import NavBar from '../NavBar';
 import '../styles/globals.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import SessionWrapper from './SessionWrapper';
 
 export const metadata: Metadata = {
   title: 'My Music',
@@ -12,7 +13,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <NavBar />
-        {children}
+        <SessionWrapper>
+          {children}
+        </SessionWrapper>
+
       </body>
     </html>
   );

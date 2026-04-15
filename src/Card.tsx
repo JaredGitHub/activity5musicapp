@@ -1,18 +1,25 @@
 'use client';
+import { useSession } from "next-auth/react";
 
 interface CardProps {
-  albumId: number;
-  title: string;
-  description: string;
-  buttonText: string;
-  image: string;
-  onClick: (albumId: number, uri: string) => void;
+    albumId: number;
+    title: string;
+    description: string;
+    buttonText: string;
+    image: string;
+    onClick: (albumId: number, uri: string) => void;
 }
+
+
+
 
 const Card = (props: CardProps) => {
     const handleButtonClick = (uri: string) => {
         props.onClick(props.albumId, uri);
     };
+
+    const { data: session } = useSession();
+    const isAdmin = session?.user?.role === "admin";
 
     return (
         <div className="card" style={{ width: '18rem' }}>
@@ -26,12 +33,16 @@ const Card = (props: CardProps) => {
                 >
                     {props.buttonText}
                 </button>
-                <button
-                    onClick={() => handleButtonClick('/edit/')}
-                    className='btn btn-secondary'
-                >
-                    Edit
-                </button>
+
+                {isAdmin && (
+                    <button
+                        onClick={() => handleButtonClick('/edit/')}
+                        className='btn btn-secondary'
+                    >
+                        Edit
+                    </button>
+                )}
+
             </div>
         </div>
     );

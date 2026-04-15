@@ -26,6 +26,14 @@ const NavBar = () => {
           <span className='nav-item nav-link'>
             <Link href='/about'>About</Link>
           </span>
+          {/* --- NextAuth Links (Add These) --- */}
+          <Link href="/api/auth/signin" className="nav-item nav-link">
+            Sign In
+          </Link>
+          <Link href="/api/auth/signout" className="nav-item nav-link">
+            Sign Out
+          </Link>
+
         </div>
       </div>
     </nav>
