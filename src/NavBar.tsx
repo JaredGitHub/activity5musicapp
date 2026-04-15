@@ -1,6 +1,13 @@
+'use client'
 import Link from 'next/link';
+import { useSession } from "next-auth/react";
+
+
 
 const NavBar = () => {
+const { data: session } = useSession();
+  const isLoggedIn = !!session;
+
   return (
     <nav className='navbar navbar-expand-lg navbar-light bg-light'>
       <span className='navbar-brand'>Jared's Music</span>
@@ -27,9 +34,10 @@ const NavBar = () => {
             <Link href='/about'>About</Link>
           </span>
           {/* --- NextAuth Links (Add These) --- */}
-          <Link href="/api/auth/signin" className="nav-item nav-link">
+          {!isLoggedIn && <Link href="/api/auth/signin" className="nav-item nav-link">
             Sign In
-          </Link>
+          </Link>}
+
           <Link href="/api/auth/signout" className="nav-item nav-link">
             Sign Out
           </Link>
