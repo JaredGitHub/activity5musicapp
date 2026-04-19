@@ -23,7 +23,7 @@ const Card = (props: CardProps) => {
 
     return (
         <div className="card" style={{ width: '18rem' }}>
-            <img src={props.image} className="card-img-top" alt="title" />
+            <img src={props.image ?? '/placeholder.png'} className="card-img-top" alt="title" />
             <div className='card-body'>
                 <h5 className='card-title'>{props.title}</h5>
                 <p className='card-text'>{props.description}</p>

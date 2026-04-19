@@ -12,7 +12,7 @@ const OneAlbum = (props: OneAlbumProps) => {
         <div className='col col-sm-3'>
           <div className='card'>
             <img
-              src={props.album.image}
+              src={props.album.image ?? undefined }
               className='card-img-top'
               alt={props.album.title}
             />
