@@ -8,12 +8,17 @@ interface CardProps {
     buttonText: string;
     image: string | null;
     onClick: (albumId: number, uri: string) => void;
+    viewUri?: string;
+    editUri?: string;
 }
 
 
 
 
 const Card = (props: CardProps) => {
+    const viewUri = props.viewUri ?? '/show/';
+    const editUri = props.editUri ?? '/edit/';
+
     const handleButtonClick = (uri: string) => {
         props.onClick(props.albumId, uri);
     };
@@ -28,7 +33,7 @@ const Card = (props: CardProps) => {
                 <h5 className='card-title'>{props.title}</h5>
                 <p className='card-text'>{props.description}</p>
                 <button
-                    onClick={() => handleButtonClick('/show/')}
+                    onClick={() => handleButtonClick(viewUri)}
                     className='btn btn-primary'
                 >
                     {props.buttonText}
@@ -36,7 +41,7 @@ const Card = (props: CardProps) => {
 
                 {isAdmin && (
                     <button
-                        onClick={() => handleButtonClick('/edit/')}
+                        onClick={() => handleButtonClick(editUri)}
                         className='btn btn-secondary'
                     >
                         Edit

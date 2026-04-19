@@ -25,7 +25,10 @@ const { data: session } = useSession();
       <div className='collapse navbar-collapse' id='navbar-navAltMarkup'>
         <div className='navbar-nav'>
           <span className='nav-item nav-link'>
-            <Link href='/'>Main</Link>
+            <Link href='/'>Albums</Link>
+          </span>
+          <span className='nav-item nav-link'>
+            <Link href='/playlists'>Playlists</Link>
           </span>
           <span className='nav-item nav-link'>
             <Link href='/new'>New</Link>
