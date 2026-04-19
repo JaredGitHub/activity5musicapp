@@ -16,17 +16,17 @@ const EditAlbum = (props: EditAlbumProps) => {
   const [image, setImage] = useState(props.album.image ?? '');
   const router = useRouter();
 
-  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const editAlbum = {
       title: albumTitle,
       artist,
       description,
-      year,
+      year: parseInt(year, 10),
       image,
       tracks: [],
     };
-    saveAlbum(editAlbum);
+    await saveAlbum(editAlbum);
   };
 
   const saveAlbum = async (album: object) => {
