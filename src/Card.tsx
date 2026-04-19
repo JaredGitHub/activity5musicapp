@@ -4,9 +4,9 @@ import { useSession } from "next-auth/react";
 interface CardProps {
     albumId: number;
     title: string;
-    description: string;
+    description: string | null;
     buttonText: string;
-    image: string;
+    image: string | null;
     onClick: (albumId: number, uri: string) => void;
 }
 

@@ -19,7 +19,7 @@ const NewAlbum = (props: NewAlbumProps) => {
       title: albumTitle,
       artist,
       description,
-      year,
+      year: parseInt(year, 10),
       image,
       tracks: [],
     };
@@ -69,7 +69,7 @@ const NewAlbum = (props: NewAlbumProps) => {
           <label htmlFor="albumYear">Year</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control${year !== '' && isNaN(parseInt(year, 10)) ? ' is-invalid' : ''}`}
             id="albumYear"
             placeholder="Enter Album Year"
             onChange={(e) => setYear(e.target.value)}

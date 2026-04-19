@@ -11,7 +11,7 @@ export default function AlbumSearch({ albums }: { albums: Album[] }) {
 
   const filtered = albums.filter((album) =>
     searchPhrase === '' ||
-    album.description.toLowerCase().includes(searchPhrase.toLowerCase())
+    (album.description ?? '').toLowerCase().includes(searchPhrase.toLowerCase())
   );
 
   return (

@@ -1,7 +1,7 @@
-import { getAlbums } from '../lib/data';
+import { getAlbums } from '../lib/albums';
 import AlbumSearch from './AlbumSearch';
 
-export default function Home() {
-  const albums = getAlbums();
+export default async function Home() {
+  const albums = await getAlbums();
   return <AlbumSearch albums={albums} />;
 }

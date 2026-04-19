@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "@types/pg": "^8.20.0",
     "axios": "^1.13.6",
     "next": "^16.2.2",
     "next-auth": "^5.0.0-beta.31",
+    "pg": "^8.20.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
