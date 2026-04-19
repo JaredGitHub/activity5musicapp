@@ -9,11 +9,11 @@ interface EditAlbumProps {
 }
 
 const EditAlbum = (props: EditAlbumProps) => {
-  const [albumTitle, setAlbumTitle] = useState('');
-  const [artist, setArtist] = useState('');
-  const [description, setDescription] = useState('');
-  const [year, setYear] = useState('');
-  const [image, setImage] = useState('');
+  const [albumTitle, setAlbumTitle] = useState(props.album.title);
+  const [artist, setArtist] = useState(props.album.artist);
+  const [description, setDescription] = useState(props.album.description ?? '');
+  const [year, setYear] = useState(String(props.album.year));
+  const [image, setImage] = useState(props.album.image ?? '');
   const router = useRouter();
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -48,6 +48,7 @@ const EditAlbum = (props: EditAlbumProps) => {
             type="text"
             className="form-control"
             id="albumTitle"
+            value={albumTitle}
             placeholder="Enter Album Title"
             onChange={(e) => setAlbumTitle(e.target.value)}
           />
@@ -57,6 +58,7 @@ const EditAlbum = (props: EditAlbumProps) => {
             type="text"
             className="form-control"
             id="albumArtist"
+            value={artist}
             placeholder="Enter Album Artist"
             onChange={(e) => setArtist(e.target.value)}
           />
@@ -65,6 +67,7 @@ const EditAlbum = (props: EditAlbumProps) => {
           <textarea
             className="form-control"
             id="albumDescription"
+            value={description}
             placeholder="Enter Album Description"
             onChange={(e) => setDescription(e.target.value)}
           />
@@ -74,6 +77,7 @@ const EditAlbum = (props: EditAlbumProps) => {
             type="text"
             className="form-control"
             id="albumYear"
+            value={year}
             placeholder="Enter Album Year"
             onChange={(e) => setYear(e.target.value)}
           />
@@ -83,6 +87,7 @@ const EditAlbum = (props: EditAlbumProps) => {
             type="text"
             className="form-control"
             id="albumImage"
+            value={image}
             placeholder="Enter Album Image"
             onChange={(e) => setImage(e.target.value)}
           />
