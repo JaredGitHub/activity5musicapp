@@ -1,5 +1,5 @@
 export type Track = {
-  id: number;
+  id?: number;
   number: number;
   title: string;
   lyrics: string | null;
