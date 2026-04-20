@@ -31,9 +31,6 @@ const { data: session } = useSession();
             <Link href='/playlists'>Playlists</Link>
           </span>
           <span className='nav-item nav-link'>
-            <Link href='/new'>New</Link>
-          </span>
-          <span className='nav-item nav-link'>
             <Link href='/about'>About</Link>
           </span>
           {/* --- NextAuth Links (Add These) --- */}
