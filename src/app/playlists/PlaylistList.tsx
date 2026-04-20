@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import PlaylistCard from '@/PlaylistCard';
-import AddAlbumsModal from './AddAlbumsModal';
+import EditAlbumsModal from './EditAlbumsModal';
 
 interface PlaylistRow {
   id: number;
@@ -46,7 +46,7 @@ export default function PlaylistList({ playlists }: { playlists: PlaylistRow[] }
       </div>
 
       {editingPlaylistId !== null && (
-        <AddAlbumsModal
+        <EditAlbumsModal
           playlistId={editingPlaylistId}
           onClose={() => setEditingPlaylistId(null)}
         />

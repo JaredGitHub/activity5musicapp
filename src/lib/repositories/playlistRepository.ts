@@ -137,3 +137,11 @@ export async function addAlbumToPlaylist(playlistId: number, albumId: number): P
     [playlistId, albumId]
   );
 }
+
+export async function removeAlbumFromPlaylist(playlistId: number, albumId: number): Promise<void> {
+  const pool = getPool();
+  await pool.query(
+    `DELETE FROM playlist_albums WHERE playlist_id = $1 AND album_id = $2`,
+    [playlistId, albumId]
+  );
+}

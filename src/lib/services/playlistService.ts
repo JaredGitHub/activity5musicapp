@@ -42,3 +42,11 @@ export async function addAlbumToPlaylist(
   await playlistRepo.addAlbumToPlaylist(playlistId, albumId);
   return playlistRepo.findPlaylistById(playlistId);
 }
+
+export async function removeAlbumFromPlaylist(
+  playlistId: number,
+  albumId: number
+): Promise<Playlist | null> {
+  await playlistRepo.removeAlbumFromPlaylist(playlistId, albumId);
+  return playlistRepo.findPlaylistById(playlistId);
+}

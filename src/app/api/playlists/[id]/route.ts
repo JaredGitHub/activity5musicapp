@@ -55,6 +55,23 @@ export async function DELETE(_req: NextRequest, context: Context) {
   }
 }
 
+// Remove an album from the playlist. Body: { albumId: number }
+export async function PATCH(req: NextRequest, context: Context) {
+  const id = await parseId(context);
+  if (id === null) return NextResponse.json({ error: 'Invalid playlist ID' }, { status: 400 });
+  try {
+    const { albumId } = await req.json();
+    if (albumId == null) return NextResponse.json({ error: 'Missing required field: albumId' }, { status: 400 });
+    const playlist = await playlistService.removeAlbumFromPlaylist(id, albumId);
+    return playlist
+      ? NextResponse.json(playlist)
+      : NextResponse.json({ error: 'Playlist not found' }, { status: 404 });
+  } catch (error) {
+    console.error(`PATCH /api/playlists/${id} error:`, error);
+    return NextResponse.json({ error: 'Failed to remove album from playlist' }, { status: 500 });
+  }
+}
+
 // Add an album to the playlist. Body: { albumId: number }
 export async function POST(req: NextRequest, context: Context) {
   const id = await parseId(context);
